@@ -1,18 +1,25 @@
-CC = gcc
-INCLUDE = include/
-LIBS = -lm
-CFLAGS = -Wall -g
+export CC = gcc
+export PRJPATH = $(shell pwd)
+export INCLUDE = $(PRJPATH)/include
+export LIBS = -lm -lglfw -lGL -lGLEW
+export CFLAGS = -Wall -g -I$(INCLUDE)
+export OBJDIR = $(PRJPATH)/obj/
 
 OBJECTS = \
-	main.o
+		  main.o \
+		  gfx/shader.o
 
+OBJECTS := $(addprefix $(OBJDIR), $(OBJECTS))
 
-flgfx: ${OBJECTS}
-	${CC} ${CFLAGS} -o $@ ${OBJECTS} ${LIBS}
+flgfx:
+	mkdir -p obj/gfx
+	
+	cd src; $(MAKE)
+	cd src/gfx; $(MAKE)
+
+	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LIBS)
+		
 
 clean:
-	rm -rf *.o
+	rm -rf obj
 	rm -rf flgfx
-
-%.o: src/%.c
-	${CC} ${CFLAGS} -c $<

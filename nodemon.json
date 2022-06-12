@@ -1,7 +1,0 @@
-{
-	"exec": "make clean && make && chmod +x flgfx && ./flgfx",
-	"watch": [
-		"src/", "include/"
-	],
-	"ext": ".c,.h"
-}
